@@ -1,0 +1,278 @@
+/************
+ * 页面样式
+ ************/
+
+/* ============
+基本默认值
+
+============ */
+
+html{
+font-size: 62.5%;
+color:#222;
+}
+::selection{                             /*一个冒号是伪类，两个冒号是伪元素*/
+    background-color: #b3d4fc;           /*  选中后的文本等背景颜色*/
+text-shadow: none;                       /*文本阴影*/
+}
+ul{
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style: none;
+}
+/* ============
+工具样式
+============ */
+.center-block{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.pull-right{
+    float:right !important;
+}
+.pull-left{
+    float:left !important;
+}
+.text-right{
+    text-align:right !important;
+}
+.text-left{
+    text-align:left!important;
+}
+.text-center{
+    text-align:center !important;
+}
+.hide{
+    display:none !important;                 /*    用hide--display--none隐藏会挤占元素空间*/
+}
+.show{
+    display:block !important;
+}
+.invisible{
+    visibility: hidden;                      /*    用invisible--visibility--hidden隐藏不会挤占元素空间*/
+}
+.text-hide{                                  /*    隐藏文本   链接用图片代替，隐藏文本*/
+    font:0/0 a;
+    color:transparent;
+    text-shodow:none;
+    background-color: transparent;
+    border:0;
+}
+                           /*    清除浮动--==子级浮动，父级塌陷，触发bfc解决浮动
+                   float：left；  overflow：auto；  display：table-cell；  display：table-caption：   display：inline-block；
+                   position：fixed；  position：absolute；        均可触发bfa
+                          不推荐    方法1：<div style="clear:both"></div>
+                                           </div>          在父级文档结尾添加空标签，清除浮动，解决父级塌陷，违背结构与表现分离web标准的精髓，且不便于维护
+                          较好      方法2：.container{   overflow:auto;}           给父级加标签  auto可换成hidden（overflow滚动条）
+                          不推荐    方法3：.container{   float:left}               让父级也浮动，影响页面布局
+                          推荐      方法四：            添加隐藏块
+                            1     .clearfix:after{
+                               尼古拉斯优雅改进   content:" ";                旧版   content:".";           为了加一段内容
+                               尼古拉斯优雅改进   display:table;              旧版   display:block;         让生成元素以块级元素显示，占满剩余空间
+                               尼古拉斯优雅改进   clear:both;                 旧版   height:0;               避免生成内容破坏原有布局高度
+                               尼古拉斯优雅改进    }                          旧版   clear:both;             清除浮动
+                               尼古拉斯优雅改进                               旧版   visibility:hidden;}     让生成内容不可见
+                            常用写法2：
+                                   .clearfix:after,
+                                   .clearfix:before{                         防止浏览器顶部的空白崩溃（margintop与marginbottom发生叠加），
+                                   content:" ";
+                                   disply:tbale;                             创建匿名的表格单元，触发bfc
+                                   }
+                                   .clearfix:after{
+                                   clear:both;
+                                   }
+
+
+                                                      clearfix{zoom:1;}             针对IE6,7，触发。。。         不考虑兼容可不要
+                          </style>
+                          </head>
+                          <body>
+                          <div class="container  clearfix">
+                                           flex可替代fload，但兼容性不强*/
+.clearfix:before,
+.clearfix:after{
+    conter:" ";
+    display:table;
+}
+.clearfix:after{
+    clear:both;
+}
+/* ============
+浏览器更新提示
+============ */
+
+.browserupgrade{                    /* 低于ie8 在浏览器上方自动提示框*/
+    margin:0;
+    padding: 1rem;
+    background:#ccc;
+}
+
+/* ============
+自定义页面样式
+============ */
+body{
+    font-size: 1.2rem;
+    line-height: 1.5;
+    background-color: #f7f7f7;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+a:hover,a:active{
+    color:#0ae;
+    text-decoration: underline;
+}
+
+/* ============
+网站头部
+============ */
+header{
+    width:100%;
+}
+header .top{
+    line-height: 3rem;       /*  汉字大小下限12px，故此行高3rem=36px */
+    padding: 0 1.5rem;
+    color:#fff;
+    background:#555;
+    border-bottom:1px #ecc000 solid;
+}
+header .top .tel{
+    float:left;
+}
+header .top ul{
+    text-align:right;
+}
+header .top ul li{
+    display:inline-block;                          /*    所有li元素在一行显示*/
+}
+header .top ul li + li {                           /*    li + li   不包含第一个，所以能只在中间加竖线   右上角分隔竖线*/
+    border-left: 1px solid #999;
+    margin-left:-3px;                             /*    li间有间隙，是inline-block间空隙，本质是HTML页面里存在的空白字符，每个li间的换行符
+                                                         删除换行符可消除，但不雅观
+                                                         解决1：父级ul添加font-size：0；   子级li设置font-sie：1.2rem;    出现下边距
+                                                         解决2：li首位相连  </a></li><li>      或li不闭合，不写</li>，系统默认添加
+                                                         解决3：添加负边距   margin-left:-3px;      副作用，不一定浏览器都为3，不一定兼容
+                                                         可在渲染时删除空白符，也可不解决
+                                                         解决4：white-space-collapsing    css4 大部分浏览器不兼容
+                                                         */
+}
+header .top ul li a {
+    display: inline-block; /*    inline-block可改成block a默认显示inline，设置为块，后面设置才生效*/
+    padding: 0 1.5rem;
+    color: #fff;
+}
+/*    商标*/
+
+header .main {
+    padding:0;
+}
+header .main .brand{
+    float:left;
+    padding: 1rem 1.5rem;
+}
+
+header .main ul{
+    text-align: right;
+}
+
+header .main ul li{
+    display: inline-block;
+    border-left:1px solid #f0ede9;
+}
+
+header .main ul li a {
+display: inline-block;
+    padding: 0 3rem;
+    line-height: 5.5rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color:#7c7a65;
+    text-decoration: none;
+}
+
+header .main ul li a:hover,
+header .main ul li a:active,
+header .main ul li a:active{
+    color:#ffb300;
+    background-color:#f8f6f1;
+}
+}
+/* ============
+网站主要内容
+============ */
+.container{
+    width:100%;
+}
+/* ============
+底部导航
+============ */
+footer{
+    width:100%;
+    padding: 3rem 0 5rem;
+    background-color: #ededed;
+}
+footer ul{
+    text-align: center ;
+
+}
+footer ul li {
+    display:inline-block;
+}
+footer ul li .icon {
+    display:inline-block;
+    text-indent: -999rem;
+    margin-right:1.5rem;
+    background:url(http://i.alipayobjects.com/e/201307/jebmKcbrh.png) no-repeat;
+    background-size: 466px 447px;
+    overflow: hidden;
+
+}
+footer ul li .icon-zfywxkz{
+    width: 38px;
+    height:27px;
+    background-position: -369px -45px;
+}
+footer ul li .icon-pcirk{
+    width:78px;
+    height:27px;
+    background-position: -110px -96px;
+}
+footer ul li .icon-visayz{
+    width:36px;
+    height:27px;
+    background-position: -426px -90px;
+}
+
+footer ul li .icon-vsjmfw{
+    width:63px;
+    height: 27px;
+    margin-right: 13px;
+    background-position: -401px -186px;
+}
+footer ul li .icon-wlgs{
+    width:22px;
+    height: 27px;
+    background-position: -48px -48px;
+}
+footer ul li .icon-rzcx{
+    width:75px;
+    height: 27px;
+    background-position: 0 -320px;
+}
+footer ul li .icon-gs{
+    width:30px;
+    height: 30px;
+    margin-right: 0;
+    background: url(https://os.alipayobjects.com/rmsportal/lybcjqloSPjMAFg.png) no-repeat;
+    background-size: 30px;
+}
+footer p{
+    text-align: center;
+    color:#999;
+}
